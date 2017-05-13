@@ -72,16 +72,19 @@ if __name__ == '__main__':
 		else:
 			print("Nothing to do.")
 	elif args.ip:
+		aws = get_aws()
+		gcp = get_gcp()
+		azure = get_azure()
 		for ip in args.ip:
-			for a in get_aws():
+			for a in aws:
 				if netaddr.IPNetwork(ip) in netaddr.IPNetwork(a['ip_prefix']):
 					print("La IP {0} pertenece a Amazon Web Services (region: {1} bloque: {2} servicio: {3}).".format(ip,a['region'],a['ip_prefix'],a['service']))
 					quit(0)
-			for a in get_gcp():
+			for a in gcp:
 				if netaddr.IPNetwork(ip) in netaddr.IPNetwork(a):
 					print("La IP {0} pertenece a Google Cloud Platform ({1}).".format(ip,a))
 					quit(0)
-			for a in get_azure():
+			for a in azure:
 				if netaddr.IPNetwork(ip) in netaddr.IPNetwork(a['ip']):
 					print("La IP {0} pertenece a Microsoft Azure (region: {1} bloque: {2}).".format(ip,a['region'],a['ip']))
 					quit(0)
